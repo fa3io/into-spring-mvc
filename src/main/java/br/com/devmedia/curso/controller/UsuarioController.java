@@ -25,7 +25,7 @@ public class UsuarioController {
 	
 	@RequestMapping(value = "/todos", method = RequestMethod.GET)
 	public ModelAndView listaTodos(ModelMap model) {
-		System.out.println("Controller Usuario");
+		System.out.println("Controller Usuario Listagem");
 		model.addAttribute("usuarios", usuarioDao.getTodos());
 		return new ModelAndView("/user/list", model);
 	}
@@ -37,6 +37,7 @@ public class UsuarioController {
 	
 	@PostMapping("/save")
 	public String save(@ModelAttribute("usuario") Usuario usuario, RedirectAttributes attr){
+		System.out.println("Controller Usuario save");
 		usuarioDao.salvar(usuario);
 		attr.addFlashAttribute("message","Usuario salvo com sucesso!");
 		return "redirect:/usuario/todos";
@@ -51,15 +52,17 @@ public class UsuarioController {
 	
 	@PostMapping("/update")
 	public ModelAndView update(@ModelAttribute("usuario") Usuario usuario, RedirectAttributes attr){
+		System.out.println("Controller Usuario update");
 		usuarioDao.editar(usuario);
 		attr.addFlashAttribute("message","Usuario alterado com sucesso!");
 		return new ModelAndView("redirect:/usuario/todos");
 	}
 	
-	
-	
-	
-	
-	
-	
+	@GetMapping("/delete/{id}")
+	public String delete(@PathVariable("id")Long id, RedirectAttributes attr){
+		System.out.println("Controller Usuario delete");
+		usuarioDao.excluir(id);
+		attr.addFlashAttribute("message", "Usuario excluido com sucesso!");
+		return "redirect:/usuario/todos";
+	}
 }
