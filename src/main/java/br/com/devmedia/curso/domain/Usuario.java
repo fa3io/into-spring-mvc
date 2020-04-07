@@ -1,6 +1,10 @@
 package br.com.devmedia.curso.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class Usuario implements Serializable{
 
@@ -12,12 +16,35 @@ public class Usuario implements Serializable{
 	
 	private String sobrenome;
 	
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate dataNascimento;
+	
+	private Sexo sexo;
+	
 	public Usuario() {}
-
+	
 	public Usuario(Long id, String nome, String sobrenome) {
 		this.id = id;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
+	
+	}
+	public Usuario(Long id, String nome, String sobrenome, LocalDate dataNascimento) {
+		this.id = id;
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.dataNascimento = dataNascimento;
+	}
+	
+	
+
+	public Usuario(Long id, String nome, String sobrenome, LocalDate dataNascimento, Sexo sexo) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.dataNascimento = dataNascimento;
+		this.setSexo(sexo);
 	}
 
 	public Long getId() {
@@ -42,6 +69,22 @@ public class Usuario implements Serializable{
 
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
+	}
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public Sexo getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(Sexo sexo) {
+		this.sexo = sexo;
 	}
 
 	@Override
