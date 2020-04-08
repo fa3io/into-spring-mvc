@@ -1,8 +1,11 @@
 package br.com.devmedia.curso.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,8 +41,12 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/save")
-	public String save(@ModelAttribute("usuario") Usuario usuario, RedirectAttributes attr){
+	public String save(@Valid @ModelAttribute("usuario") Usuario usuario, BindingResult result, RedirectAttributes attr){
 		System.out.println("Controller Usuario save");
+		
+		if(result.hasErrors()){
+			return "/user/add";
+		}
 		usuarioDao.salvar(usuario);
 		attr.addFlashAttribute("message","Usuario salvo com sucesso!");
 		return "redirect:/usuario/todos";
@@ -53,8 +60,12 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/update")
-	public ModelAndView update(@ModelAttribute("usuario") Usuario usuario, RedirectAttributes attr){
+	public ModelAndView update(@Valid @ModelAttribute("usuario") Usuario usuario,BindingResult result, RedirectAttributes attr){
 		System.out.println("Controller Usuario update");
+		if(result.hasErrors()){
+			return new ModelAndView("/user/add");
+		}
+		
 		usuarioDao.editar(usuario);
 		attr.addFlashAttribute("message","Usuario alterado com sucesso!");
 		return new ModelAndView("redirect:/usuario/todos");
