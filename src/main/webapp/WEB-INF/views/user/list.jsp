@@ -8,18 +8,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Lista de Ususarios</title>
+<spring:url var="css" value="/static/css/bootstrap.css" />
+<link type="text/css" rel="stylesheet" href="${css }">
 </head>
 <body>
-<div class="container">
-    <h1>Lista de Usuários</h1>
-    <hr>
-    <div>
-		<spring:url value="/usuario/cadastro" var="cadastro"/>
-        <a class="btn btn-default" href="${cadastro }">Novo Usuário</a>
-    </div>
-    <hr>
+	<div class="container">
+		<h1>Lista de Usuários</h1>
+		<hr>
+		<div>
+			<spring:url value="/usuario/cadastro" var="cadastro" />
+			<a class="btn btn-default" href="${cadastro }">Novo Usuário</a>
+		</div>
+		<hr>
 
-    <div class="${message == null ? 'panel-default' : 'panel-success'}">
+		<div class="${message == null ? 'panel-default' : 'panel-success'}">
 
 			<div class="panel-heading">
 				<span>${message == null ? '&nbsp;' : message}</span>
@@ -39,17 +41,16 @@
 						<tr>
 							<td>${usuario.id }</td>
 							<td>${usuario.nome }&nbsp;${usuario.sobrenome }</td>
-							<td>
-								<f:parseDate var="date" value="${usuario.dataNascimento}" pattern="yyyy-MM-dd" type="date"/>
-								<f:formatDate value="${date}" pattern="dd/MM/yyyy" type="date"/>
-							</td>
+							<td><f:parseDate var="date"
+									value="${usuario.dataNascimento}" pattern="yyyy-MM-dd"
+									type="date" /> <f:formatDate value="${date}"
+									pattern="dd/MM/yyyy" type="date" /></td>
 							<td>${usuario.sexo.descricao }</td>
-							<td>
-								<spring:url value="/usuario/update/${usuario.id}" var="update"></spring:url>
-								<a class="btn btn-info" href="${update}">Editar</a> 
-								<spring:url value="/usuario/delete/${usuario.id}" var="delete"></spring:url>
-								<a class="btn btn-danger" href="${delete}">Excluir</a>
-							</td>
+							<td><spring:url value="/usuario/update/${usuario.id}"
+									var="update"></spring:url> <a class="btn btn-info"
+								href="${update}">Editar</a> <spring:url
+									value="/usuario/delete/${usuario.id}" var="delete"></spring:url>
+								<a class="btn btn-danger" href="${delete}">Excluir</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
